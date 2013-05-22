@@ -1,11 +1,7 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="utf-8">
-  <title>AppEngine Django Blank</title>
-</head>
-<body>
-  <p>Hello World</p>
-  <p>{{ message }}</p>
-</body>
-</html>
+{% extends "base.html" %}
+{% block content %}
+  <form method="post" action="/post">
+    <textarea name="text" cols="50" rows="5"></textarea>
+    <input type="submit" value="Submit">
+  </form>
+{% endblock %}

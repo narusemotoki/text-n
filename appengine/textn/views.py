@@ -1,11 +1,18 @@
 # -*- coding: utf-8 -*-
-from django.http import HttpResponse
-from django.template import Context, loader
+from django.shortcuts import render_to_response, redirect
+from django.views.decorators.http import require_GET, require_POST
 
 
-def index(request, message):
-    context = Context({
-        'message': message,
-    })
+@require_GET
+def index(request):
+    return render_to_response('index.html')
 
-    return HttpResponse(loader.get_template('index.html').render(context))
+
+@require_POST
+def post(request):
+    return redirect('/result')
+
+
+@require_GET
+def result(request):
+    return render_to_response('result.html')

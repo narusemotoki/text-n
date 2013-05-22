@@ -1,6 +1,9 @@
+# -*- coding: utf-8 -*-
 from django.conf.urls.defaults import patterns
 
 urlpatterns = patterns(
     'textn.views',
-    (r'^(?P<message>.*)$', 'index'),
+    (r'^$', 'index'),
+    (r'^post$', 'post'),
+    (r'^result$', 'result'),
 )
