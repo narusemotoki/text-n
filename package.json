@@ -1,0 +1,11 @@
+{
+  "name": "text-n",
+  "version": "2013.05.25a",
+  "private": true,
+  "devDependencies": {
+    "grunt": "~0.4.0",
+    "grunt-contrib-coffee": "~0.5.0",
+    "grunt-contrib-clean": "~0.4.0",
+    "grunt-contrib-watch": "~0.3.0"
+  }
+}

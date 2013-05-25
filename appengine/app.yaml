@@ -5,6 +5,12 @@ api_version: 1
 threadsafe: yes
 
 handlers:
+- url: /
+  static_files: static/index.html
+  upload: static/index\.html
+  login: required
+  secure: always
+
 - url: /static
   static_dir: static
   secure: always

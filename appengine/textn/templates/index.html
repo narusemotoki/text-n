@@ -1,5 +1,12 @@
 {% extends "base.html" %}
+{% block head %}
+<script src="static/js/angular.min.js"></script>
+<script src="static/js/textn.js"></script>
+{% endblock %}
+
 {% block content %}
+  <p>{{ email }}</p>
+
   <form method="post" action="/post">
     <textarea name="text" cols="50" rows="5"></textarea>
     <input type="submit" value="Submit">
