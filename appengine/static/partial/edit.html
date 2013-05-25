@@ -1,6 +1,6 @@
-<p>{{ user }}</p>
+<p>Hello {{ user }} !</p>
 
-<form name="form">
+<form name="form" ng-submit="submit()" novalidate>
   <label>
     Text: <textarea type="text" name="text" ng-model="text" required></textarea>
   </label>
@@ -9,12 +9,20 @@
     Password: <input type="password" name="password" ng-model="password" />
   </label>
   <br />
-  <label>
-    approvals:
-    <ul>
-      <li ng-repeat="approval in approvals"><input type="text" ng-model="approval" /></li>
-    </ul>
-  </label>
-  <br />
-  <input type="button" value="Submit" ng-disabled="form.text.$error.required" ng-click="submit()" />
+  <ul>
+    <li ng-repeat="approval in approvals">
+      <input type="text" ng-model="approval.approval" autofocus />
+      <input type="button" value="X" ng-disabled="approval.approval == ''" ng-click="approval.approval = ''" />
+    </li>
+    <li>
+      <input ng-model="approval" ng-change="add()" placeholder="Gmail or GoogleApp account or GoogleApp domain" />
+    </li>
+  </ul>
+
+  <input type="button" value="Submit" ng-disabled="form.text.$error.required" />
 </form>
+
+<p>Password is for viewing rather than editing.</p>
+<p>
+  Write as "example@gmail.com" if authenticate in an account of Gmail or GoogleApps and write "example.com" if authenticate in GoogleApps.
+</p>
