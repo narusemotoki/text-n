@@ -1,28 +1,27 @@
-<p>Hello {{ user }} !</p>
+<div ng-include src="'static/partial/loading.html'"></div>
 
-<form name="form" ng-submit="submit()" novalidate>
-  <label>
-    Text: <textarea type="text" name="text" ng-model="text" required></textarea>
-  </label>
-  <br />
-  <label>
-    Password: <input type="password" name="password" ng-model="password" />
-  </label>
-  <br />
-  <ul>
-    <li ng-repeat="approval in approvals">
-      <input type="text" ng-model="approval.approval" autofocus />
-      <input type="button" value="X" ng-disabled="approval.approval == ''" ng-click="approval.approval = ''" />
-    </li>
-    <li>
-      <input ng-model="approval" ng-change="add()" placeholder="Gmail or GoogleApp account or GoogleApp domain" />
-    </li>
-  </ul>
-
-  <input type="button" value="Submit" ng-disabled="form.text.$error.required" />
-</form>
-
-<p>Password is for viewing rather than editing.</p>
-<p>
-  Write as "example@gmail.com" if authenticate in an account of Gmail or GoogleApps and write "example.com" if authenticate in GoogleApps.
-</p>
+<div ng-hide="isLoading">
+  <form name="form" ng-submit="submit()" novalidate>
+    <textarea class="span12" type="text" rows="5" name="text" ng-model="text" placeholder="Paste your text!" required></textarea>
+    <p>
+      <input type="password" name="password" ng-model="password" placeholder="Password" />
+      Password is for viewing rather than editing.
+    </p>
+    <ul class="unstyled">
+      <li ng-repeat="approval in approvals">
+        <span class="input-append">
+        <input type="text" ng-model="approval.approval" placeholder="Approval" autofocus />
+        <button class="btn btn-danger" ng-disabled="approval.approval == ''" ng-click="approval.approval = ''" />X</button>
+        <span>
+      </li>
+      <li>
+        <input type="text" ng-model="approval" ng-change="add()" placeholder="Approval" />
+        Account of Gmail or GoogleApps: "example@gmail.com", GoogleApps domain: "example.com".
+      </li>
+    </ul>
+    <p>
+      {{ user }}
+      <button class="btn" ng-disabled="form.text.$error.required" />Submit</button>
+    </p>
+  </form>
+</div>
