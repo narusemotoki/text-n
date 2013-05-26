@@ -1,0 +1,12 @@
+<div ng-include src="'static/partial/loading.html'"></div>
+<div ng-hide="isLoading">
+  <div>
+    <p>
+      PlaneText: <a ng-href="{{ planeTextUrl }}" target="_blank">{{ planeTextUrl }}</a>
+    </p>
+    <p>
+      HTML: <a ng-href="{{ htmlUrl }}" target="_blank">{{ htmlUrl }}</a>
+    </p>
+  </div>
+  <pre>{{ text.text }}</pre>
+</div>

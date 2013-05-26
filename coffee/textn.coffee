@@ -1,7 +1,7 @@
 angular.module('textn', []).config ($routeProvider) =>
-  $routeProvider.when '/result/:key',
-    templateUrl: 'static/partial/result.html'
-    controller: 'ResultCtrl'
+  $routeProvider.when '/html/:key',
+    templateUrl: 'static/partial/html.html'
+    controller: 'HtmlCtrl'
   .otherwise
     templateUrl: 'static/partial/edit.html'
     controller: 'EditCtrl'

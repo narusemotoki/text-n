@@ -14,6 +14,18 @@ class HttpResponseUnauthorized(HttpResponse):
 
 
 class BaseView(View):
+    def _text2dict(self, text):
+        d = {
+            'key': text.key.urlsafe(),
+            'user': text.user.email(),
+            'text': text.text,
+            'approvals': text.approvals,
+            'updated_at': time.mktime(text.updated_at.timetuple())
+        }
+        d['has_password'] = True if text.password else False
+
+        return d
+
     def _get_current_user_email(self):
         user = users.get_current_user()
         if user:
@@ -32,9 +44,6 @@ class BaseView(View):
             return True
 
     def _has_allowed(self, text):
-        if len(text.approvals) == 0:
-            return True
-
         if len(text.approvals) == 0:
             return True
         email = self._get_current_user_email()
@@ -59,21 +68,12 @@ class TextView(BaseView):
         if key:
             text = Key(urlsafe=key).get()
             if text:
-                json_source = {
-                    'user': text.user.email(),
-                    'text': text.text,
-                    'approvals': text.approvals,
-                    'updated_at': time.mktime(text.updated_at.timetuple())
-                }
-            else:
-                return HttpResponseNotFound()
+                json_source = self._text2dict(text)
         else:
             email = self._get_current_user_email()
             if not email:
                 return HttpResponseUnauthorized()
-            json_source = {
-                'user': email
-            }
+            json_source = {'user': email}
         return self._render_to_json_response(json_source)
 
     def post(self, request, key):
@@ -88,8 +88,9 @@ class TextView(BaseView):
         if 'password' in data:
             # TODO: hash
             text.password = data['password']
+        text.put()
 
-        return self._render_to_json_response({'key': text.put().urlsafe()})
+        return self._render_to_json_response(self._text2dict(text))
 
 
 class PlaneTextView(BaseView):

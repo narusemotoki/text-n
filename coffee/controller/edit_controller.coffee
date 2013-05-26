@@ -13,7 +13,7 @@
     data.approvals.push a.approval for a in $scope.approvals
 
     $http.post(TEXT_PATH, data)
-    .success (data) => $location.path('/result/' + data.key)
+    .success (data) => $location.path('/html/' + data.key)
 
   $scope.delete = (index) => $scope.approvals.splice(index, 1)
 
