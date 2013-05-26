@@ -15,6 +15,8 @@
     $http.post(TEXT_PATH, data)
     .success (data) => $location.path('/result/' + data.key)
 
+  $scope.delete = (index) => $scope.approvals.splice(index, 1)
+
   $scope.isLoading = true
   $http.get(TEXT_PATH)
   .success (data) =>

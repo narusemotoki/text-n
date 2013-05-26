@@ -12,6 +12,7 @@
         <span class="input-append">
         <input type="text" ng-model="approval.approval" placeholder="Approval" autofocus />
         <button class="btn btn-danger" ng-disabled="approval.approval == ''" ng-click="approval.approval = ''" />X</button>
+        <button class="btn btn-danger" ng-click="delete($index)" />-</button>
         <span>
       </li>
       <li>
