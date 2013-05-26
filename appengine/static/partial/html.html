@@ -16,7 +16,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <div ng-include src="'static/partial/loading.html'"></div>
-<div ng-hide="isLoading">
+<div ng-hide="isLoading || !text.text">
   <div>
     <p>
       PlaneText: <a ng-href="{{ planeTextUrl }}" target="_blank">{{ planeTextUrl }}</a>
@@ -26,4 +26,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     </p>
   </div>
   <pre>{{ text.text }}</pre>
+</div>
+<div ng-hide="isLoading || text.text">
+  <div>
+    <p>403 Forbidden</p>
+  </div>
 </div>

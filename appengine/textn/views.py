@@ -24,6 +24,7 @@ from django.http import HttpResponse, HttpResponseForbidden
 from django.http import HttpResponseNotFound, HttpResponseBadRequest
 from django.views.generic import View
 import time
+from django.core.cache import cache
 
 
 class HttpResponseUnauthorized(HttpResponse):
@@ -31,6 +32,16 @@ class HttpResponseUnauthorized(HttpResponse):
 
 
 class BaseView(View):
+    def _setCache(self, text):
+        cache.set(text.key.urlsafe(), text, 86400)
+
+    def _getCacheOrDatastore(self, urlsafe_key):
+        cached = cache.get(urlsafe_key)
+        text = cached if cached else Key(urlsafe=urlsafe_key).get()
+        if text:
+            self._setCache(text)
+        return text
+
     def _text2dict(self, text):
         d = {
             'key': text.key.urlsafe(),
@@ -82,11 +93,13 @@ class BaseView(View):
 
 class TextView(BaseView):
     def get(self, request, key):
+        json_source = None
         if key:
-            text = Key(urlsafe=key).get()
-            if text:
+            text = self._getCacheOrDatastore(key)
+            if not text.password and self._has_read_permission(request, text):
                 json_source = self._text2dict(text)
-        else:
+
+        if not json_source:
             email = self._get_current_user_email()
             if not email:
                 return HttpResponseUnauthorized()
@@ -106,6 +119,7 @@ class TextView(BaseView):
             # TODO: hash
             text.password = data['password']
         text.put()
+        self._setCache(text)
 
         return self._render_to_json_response(self._text2dict(text))
 
@@ -115,7 +129,7 @@ class PlaneTextView(BaseView):
         return HttpResponse(plane_text, mimetype='text/plain')
 
     def get(self, request, key):
-        text = Key(urlsafe=key).get()
+        text = self._getCacheOrDatastore(key)
         if not text:
             return HttpResponseNotFound()
 
