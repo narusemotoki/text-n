@@ -19,7 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 <div ng-hide="isLoading">
   <form name="form" ng-submit="submit()" novalidate>
-    <textarea class="span12" type="text" rows="5" name="text" ng-model="text" placeholder="Paste your text!" required></textarea>
+    <textarea class="span12" type="text" rows="5" name="text" ng-model="text" ng-trim="false" placeholder="Paste your text!" required></textarea>
     <p ng-show="">
       <input type="password" name="password" ng-model="password" placeholder="Password" />
       Password is for viewing rather than editing.
