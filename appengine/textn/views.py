@@ -81,11 +81,10 @@ class BaseView(View):
         for approval in text.approvals:
             if '@' in approval:
                 if email == approval:
-                    break
+                    return True
             elif email.endswith('@' + approval):
-                break
-        else:
-            return False
+                return True
+        return False
 
     def _is_owner(self, text):
         return text.user.email() == self._get_current_user_email()
