@@ -19,7 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 @HtmlCtrl = ($scope, $routeParams, $http) =>
   TEXT_PATH = 'api/text'
 
-  $scope.planeTextUrl = $scope.baseUrl + '/planetext/' + $routeParams.key
+  $scope.plainTextUrl = $scope.baseUrl + '/plaintext/' + $routeParams.key
   $scope.htmlUrl = $scope.baseUrl + '/#/html/' + $routeParams.key
 
   $scope.isLoading = true

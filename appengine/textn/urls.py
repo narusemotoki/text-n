@@ -23,5 +23,5 @@ from views import TextView, PlaneTextView
 urlpatterns = patterns(
     '',
     (r'^api/text/?(?P<key>.*)$', TextView.as_view()),
-    (r'^planetext/?(?P<key>.*)$', PlaneTextView.as_view())
+    (r'^plaintext/?(?P<key>.*)$', PlaneTextView.as_view())
 )
