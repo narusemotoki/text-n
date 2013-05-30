@@ -125,7 +125,7 @@ class TextView(BaseView):
 
 class PlaneTextView(BaseView):
     def _render_to_plane_text_response(self, plane_text):
-        return HttpResponse(plane_text, mimetype='text/plain')
+        return HttpResponse(plane_text, mimetype='text/plain; charset="utf-8"')
 
     def get(self, request, key):
         text = self._getCacheOrDatastore(key)
