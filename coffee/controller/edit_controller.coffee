@@ -44,3 +44,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       $scope.approvals.push
         approval: data.user.substr (data.user.lastIndexOf '@') + 1
     $scope.isLoading = false
+  .error (data, status) => $scope.commonErrorHandle data, status

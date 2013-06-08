@@ -16,7 +16,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
-@HtmlCtrl = ($scope, $routeParams, $http) =>
+@HtmlCtrl = ($scope, $routeParams, $http, $window, $location) =>
   TEXT_PATH = 'api/text'
 
   $scope.plainTextUrl = $scope.baseUrl + '/plaintext/' + $routeParams.key
@@ -27,3 +27,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   .success (data) =>
     $scope.text = data
     $scope.isLoading = false
+  .error (data, status) => $scope.commonErrorHandle data, status

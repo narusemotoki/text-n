@@ -30,6 +30,15 @@ from django.views.generic import View
 import time
 from django.core.cache import cache
 from django.shortcuts import redirect
+import urllib
+from django.core.urlresolvers import reverse
+
+
+def login(request, redirect_to):
+    dest_url = urllib.unquote_plus(redirect_to) if redirect_to else '/'
+    print dest_url
+
+    return redirect(users.create_login_url(dest_url))
 
 
 def logout(request):
@@ -85,6 +94,9 @@ class BaseView(View):
         if self._has_allowed(text):
             return True
 
+    def _is_public(self, text):
+        return not text.password and len(text.approvals) == 0
+
     def _has_allowed(self, text):
         if len(text.approvals) == 0:
             return True
@@ -103,6 +115,9 @@ class BaseView(View):
     def _is_owner(self, text):
         return text.user.email() == self._get_current_user_email()
 
+    def _to_login(self, dest_url):
+        return redirect(reverse('textn.views.login', args=[dest_url]))
+
 
 class TextView(BaseView):
     def get(self, request, key):
@@ -111,6 +126,8 @@ class TextView(BaseView):
             text = self._getCacheOrDatastore(key)
             if not text.password and self._has_read_permission(request, text):
                 json_source = self._text2dict(text)
+            elif not self._is_public(text):
+                return HttpResponseUnauthorized()
 
         if not json_source:
             email = self._get_current_user_email()
@@ -148,7 +165,8 @@ class PlaneTextView(BaseView):
 
         if not text.password and self._has_read_permission(request, text):
             return self._render_to_plane_text_response(text.text)
-
+        elif not self._is_public(text):
+            return self._to_login(urllib.quote_plus('plaintext/' + key))
         return HttpResponseForbidden()
 
     def post(self, request, key):

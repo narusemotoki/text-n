@@ -23,7 +23,7 @@ angular.module('textn', []).config ($routeProvider) =>
   .otherwise
     templateUrl: 'static/partial/edit.html'
     controller: 'EditCtrl'
-.run ($rootScope,  $location) =>
+.run ($rootScope, $location, $window) =>
   $rootScope.appName = 'text-n'
   $rootScope.baseUrl = $location.protocol() + '://' +
     $location.host() +
@@ -31,5 +31,9 @@ angular.module('textn', []).config ($routeProvider) =>
       ':' + $location.port()
     else
       ''
+  $rootScope.commonErrorHandle = (data, status) =>
+    if status is 401
+      escapedPath = $window.escape '#' + $location.path()
+      $window.location.href = $rootScope.baseUrl + '/auth/login/' + escapedPath
 .filter 'nl2br', => (source) =>
   String(source).replace /\r?\n/g, '<br />' if source
