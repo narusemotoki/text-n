@@ -25,6 +25,16 @@ from django.http import HttpResponseNotFound, HttpResponseBadRequest
 from django.views.generic import View
 import time
 from django.core.cache import cache
+from django.shortcuts import redirect
+
+
+def logout(request):
+    response = redirect('/')
+    response.delete_cookie('dev_appserver_login')
+    response.delete_cookie('SACSID')
+    response.delete_cookie('ACSID')
+
+    return response
 
 
 class HttpResponseUnauthorized(HttpResponse):
