@@ -1,10 +1,15 @@
 ---
-language: python
-python:
-- '2.7'
+language:
+- python
+- node_js
+python: '2.7'
+node_js: '0.10'
 install:
 - pip install -r requirements.txt --use-mirrors
+- npm install -g -q grunt-cli karma phantomjs
 before_script:
 - pep8 . --exclude=google_appengine
 - ./setup.sh
-script: nosetests test/appengine -s
+script:
+- nosetests test/appengine -s --rednose --force-color
+- grunt test

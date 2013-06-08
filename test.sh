@@ -18,11 +18,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #__COMMENT_OUT__
 ./setup.sh
 
-PEP8RESULT=`pep8 . --exclude=google_appengine 2>&1`
+PEP8RESULT=`pep8 . --exclude=google_appengine,node_modules 2>&1`
 if [ -n "$PEP8RESULT" ]; then
   echo $PEP8RESULT
 else
   echo PEP8 OK
 fi
 
-nosetests test/appengine -s
+nosetests test/appengine -s --rednose --force-color
+grunt test

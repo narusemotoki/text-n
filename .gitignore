@@ -4,6 +4,8 @@
 local_settings.py
 
 textn.js
+test.js
+test-results.xml
 node_modules
 
 google_appengine

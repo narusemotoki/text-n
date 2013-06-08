@@ -21,3 +21,18 @@ if [ ! -e google_appengine ]; then
   unzip -q google_appengine_1.8.0.zip
   rm google_appengine_1.8.0.zip
 fi
+
+if [ ! `which grunt` ]; then
+  sudo env PATH=$PATH npm install -g -q grunt-cli
+fi
+
+
+if [ ! `which karma` ]; then
+  sudo env PATH=$PATH npm install -g -q karma
+fi
+
+if [ ! `which phantomjs` ]; then
+  sudo env PATH=$PATH npm install -g -q phantomjs
+fi
+
+npm install
