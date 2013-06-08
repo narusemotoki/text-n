@@ -4,4 +4,6 @@
 local_settings.py
 
 textn.js
-node_modules/
+node_modules
+
+google_appengine
