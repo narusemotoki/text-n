@@ -20,8 +20,12 @@ from google.appengine.api import users
 from models import Text
 from google.appengine.ext.ndb import Key
 import json
-from django.http import HttpResponse, HttpResponseForbidden
-from django.http import HttpResponseNotFound, HttpResponseBadRequest
+from django.http import (
+    HttpResponse,
+    HttpResponseForbidden,
+    HttpResponseNotFound,
+    HttpResponseBadRequest,
+)
 from django.views.generic import View
 import time
 from django.core.cache import cache
