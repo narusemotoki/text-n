@@ -61,3 +61,24 @@ apiproxy_stub_map.apiproxy.RegisterStub(
 os.environ['DJANGO_SETTINGS_MODULE'] = 'textn.settings'
 from google.appengine.api import memcache
 sys.modules['memcache'] = memcache
+
+import unittest
+from google.appengine.ext import testbed
+
+
+class GaeTestCase(unittest.TestCase):
+    def setUp(self):
+        self.testbed = testbed.Testbed()
+        self.testbed.activate()
+        self.testbed.init_datastore_v3_stub()
+        self.testbed.init_memcache_stub()
+
+    def tearDown(self):
+        self.logout()
+        self.testbed.deactivate()
+
+    def login(self, email):
+        os.environ['USER_EMAIL'] = email
+
+    def logout(self):
+        del os.environ['USER_EMAIL']

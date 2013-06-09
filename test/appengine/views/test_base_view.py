@@ -16,14 +16,15 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-import unittest
+from appengine import GaeTestCase
 from textn.views import BaseView
 from textn.models import Text
-import os
+import copy
 
 
-class BaseViewTest(unittest.TestCase):
+class BaseViewTest(GaeTestCase):
     def setUp(self):
+        GaeTestCase.setUp(self)
         self.base_view = BaseView()
 
     def test_is_public(self):
@@ -49,5 +50,39 @@ class BaseViewTest(unittest.TestCase):
         self.assertIsNone(self.base_view._get_current_user_email())
 
         email = 'test@example.com'
-        os.environ['USER_EMAIL'] = email
+        self.login(email)
+
         self.assertEqual(self.base_view._get_current_user_email(), email)
+
+    def test_get_cache_or_datastore(self):
+        text = Text(text='TextText', approvals=['example.com'])
+        text.put()
+        original = copy.copy(text)
+
+        # first: read from datastore
+        datastore = self.base_view._get_cache_or_datastore(text.key.urlsafe())
+        self.assertEqual(datastore, original)
+
+        # second: read from cache, that is not affected by `put`
+        datastore.text = 'edit'
+        datastore.put()
+        cache = self.base_view._get_cache_or_datastore(text.key.urlsafe())
+        self.assertEqual(cache, original)
+
+    def test_read_permission(self):
+        self.login('post@example.com')
+        text = Text(
+            text='Text',
+            approvals=['approval@example2.com', 'example3.com']
+        )
+        text.put()
+
+        def has_read_permission(email):
+            self.login(email)
+            return self.base_view._has_read_permission(text)
+
+        self.assertTrue(has_read_permission('post@example.com'))
+        self.assertTrue(has_read_permission('approval@example2.com'))
+        self.assertTrue(has_read_permission('approval@example3.com'))
+        self.assertFalse(has_read_permission('nonapproval@example2.com'))
+        self.assertFalse(has_read_permission('nonapproval@example.com'))

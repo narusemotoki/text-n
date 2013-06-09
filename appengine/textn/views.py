@@ -87,12 +87,14 @@ class BaseView(View):
     def _render_to_json_response(self, source):
         return HttpResponse(json.dumps(source), mimetype='application/json')
 
-    def _has_read_permission(self, request, text):
+    def _has_read_permission(self, text):
         if self._is_owner(text):
             return True
 
         if self._has_allowed(text):
             return True
+
+        return False
 
     def _is_public(self, text):
         return not text.password and len(text.approvals) == 0
@@ -124,7 +126,7 @@ class TextView(BaseView):
         json_source = None
         if key:
             text = self._get_cache_or_datastore(key)
-            if not text.password and self._has_read_permission(request, text):
+            if not text.password and self._has_read_permission(text):
                 json_source = self._text2dict(text)
             elif not self._is_public(text):
                 return HttpResponseUnauthorized()
@@ -163,7 +165,7 @@ class PlaneTextView(BaseView):
         if not text:
             return HttpResponseNotFound()
 
-        if not text.password and self._has_read_permission(request, text):
+        if not text.password and self._has_read_permission(text):
             return self._render_to_plane_text_response(text.text)
         elif not self._is_public(text):
             return self._to_login(urllib.quote_plus('plaintext/' + key))
@@ -183,6 +185,6 @@ class PlaneTextView(BaseView):
             elif not text.password == request.POST['password']:
                 return HttpResponseUnauthorized()
 
-        if not text.password and self._has_read_permission(request, text):
+        if not text.password and self._has_read_permission(text):
             return self._render_to_plane_text_response(text.text)
         return HttpResponseForbidden()
