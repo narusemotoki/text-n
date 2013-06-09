@@ -71,7 +71,7 @@ class BaseView(View):
             'user': text.user.email(),
             'text': text.text,
             'approvals': text.approvals,
-            'updated_at': time.mktime(text.updated_at.timetuple())
+            'updated_at': int(time.mktime(text.updated_at.timetuple()))
         }
         d['has_password'] = True if text.password else False
 
@@ -123,20 +123,20 @@ class BaseView(View):
 
 class TextView(BaseView):
     def get(self, request, key):
-        json_source = None
         if key:
-            text = self._get_cache_or_datastore(key)
-            if not text.password and self._has_read_permission(text):
-                json_source = self._text2dict(text)
-            elif not self._is_public(text):
-                return HttpResponseUnauthorized()
+            try:
+                text = self._get_cache_or_datastore(key)
+                if not text.password and self._has_read_permission(text):
+                    return self._render_to_json_response(self._text2dict(text))
+                elif not self._is_public(text):
+                    return HttpResponseUnauthorized()
+            except:
+                return HttpResponseBadRequest()
 
-        if not json_source:
-            email = self._get_current_user_email()
-            if not email:
-                return HttpResponseUnauthorized()
-            json_source = {'user': email}
-        return self._render_to_json_response(json_source)
+        email = self._get_current_user_email()
+        if not email:
+            return HttpResponseUnauthorized()
+        return self._render_to_json_response({'user': email})
 
     def post(self, request, key):
         data = json.loads(request.raw_post_data)

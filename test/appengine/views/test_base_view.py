@@ -35,6 +35,7 @@ class BaseViewTest(GaeTestCase):
         self.assertTrue(is_public('', []))
         self.assertFalse(is_public('password', []))
         self.assertFalse(is_public('', ['example.com']))
+        self.assertFalse(is_public('password', ['example.com']))
 
     def test_to_login(self):
         self.assertEqual(

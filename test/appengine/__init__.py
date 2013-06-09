@@ -81,4 +81,5 @@ class GaeTestCase(unittest.TestCase):
         os.environ['USER_EMAIL'] = email
 
     def logout(self):
-        del os.environ['USER_EMAIL']
+        if 'USER_EMAIL' in os.environ:
+            del os.environ['USER_EMAIL']
