@@ -55,14 +55,14 @@ class HttpResponseUnauthorized(HttpResponse):
 
 
 class BaseView(View):
-    def _setCache(self, text):
+    def _set_cache(self, text):
         cache.set(text.key.urlsafe(), text, 86400)
 
-    def _getCacheOrDatastore(self, urlsafe_key):
+    def _get_cache_or_datastore(self, urlsafe_key):
         cached = cache.get(urlsafe_key)
         text = cached if cached else Key(urlsafe=urlsafe_key).get()
         if text:
-            self._setCache(text)
+            self._set_cache(text)
         return text
 
     def _text2dict(self, text):
@@ -123,7 +123,7 @@ class TextView(BaseView):
     def get(self, request, key):
         json_source = None
         if key:
-            text = self._getCacheOrDatastore(key)
+            text = self._get_cache_or_datastore(key)
             if not text.password and self._has_read_permission(request, text):
                 json_source = self._text2dict(text)
             elif not self._is_public(text):
@@ -149,7 +149,7 @@ class TextView(BaseView):
             # TODO: hash
             text.password = data['password']
         text.put()
-        self._setCache(text)
+        self._set_cache(text)
 
         return self._render_to_json_response(self._text2dict(text))
 
@@ -159,7 +159,7 @@ class PlaneTextView(BaseView):
         return HttpResponse(plane_text, mimetype='text/plain; charset="utf-8"')
 
     def get(self, request, key):
-        text = self._getCacheOrDatastore(key)
+        text = self._get_cache_or_datastore(key)
         if not text:
             return HttpResponseNotFound()
 
