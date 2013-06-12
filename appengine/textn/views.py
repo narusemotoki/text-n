@@ -28,7 +28,6 @@ from django.http import (
 )
 from django.views.generic import View
 import time
-from django.core.cache import cache
 from django.shortcuts import redirect
 import urllib
 from django.core.urlresolvers import reverse
