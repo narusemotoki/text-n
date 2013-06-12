@@ -55,21 +55,6 @@ class BaseViewTest(GaeTestCase):
 
         self.assertEqual(self.base_view._get_current_user_email(), email)
 
-    def test_get_cache_or_datastore(self):
-        text = Text(text='TextText', approvals=['example.com'])
-        text.put()
-        original = copy.copy(text)
-
-        # first: read from datastore
-        datastore = self.base_view._get_cache_or_datastore(text.key.urlsafe())
-        self.assertEqual(datastore, original)
-
-        # second: read from cache, that is not affected by `put`
-        datastore.text = 'edit'
-        datastore.put()
-        cache = self.base_view._get_cache_or_datastore(text.key.urlsafe())
-        self.assertEqual(cache, original)
-
     def test_read_permission(self):
         self.login('post@example.com')
         text = Text(

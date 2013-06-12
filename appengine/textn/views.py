@@ -55,27 +55,18 @@ class HttpResponseUnauthorized(HttpResponse):
 
 
 class BaseView(View):
-    def _set_cache(self, text):
-        cache.set(text.key.urlsafe(), text, 86400)
-
     def _get_cache_or_datastore(self, urlsafe_key):
-        cached = cache.get(urlsafe_key)
-        text = cached if cached else Key(urlsafe=urlsafe_key).get()
-        if text:
-            self._set_cache(text)
-        return text
+        return Key(urlsafe=urlsafe_key).get()
 
     def _text2dict(self, text):
-        d = {
+        return {
             'key': text.key.urlsafe(),
             'user': text.user.email(),
             'text': text.text,
             'approvals': text.approvals,
-            'updated_at': int(time.mktime(text.updated_at.timetuple()))
+            'updated_at': int(time.mktime(text.updated_at.timetuple())),
+            'has_password': True if text.password else False
         }
-        d['has_password'] = True if text.password else False
-
-        return d
 
     def _get_current_user_email(self):
         user = users.get_current_user()
@@ -125,7 +116,7 @@ class TextView(BaseView):
     def get(self, request, key):
         if key:
             try:
-                text = self._get_cache_or_datastore(key)
+                text = Key(urlsafe=key).get()
                 if not text.password and self._has_read_permission(text):
                     return self._render_to_json_response(self._text2dict(text))
                 elif not self._is_public(text):
@@ -151,7 +142,6 @@ class TextView(BaseView):
             # TODO: hash
             text.password = data['password']
         text.put()
-        self._set_cache(text)
 
         return self._render_to_json_response(self._text2dict(text))
 
@@ -161,7 +151,7 @@ class PlaneTextView(BaseView):
         return HttpResponse(plane_text, mimetype='text/plain; charset="utf-8"')
 
     def get(self, request, key):
-        text = self._get_cache_or_datastore(key)
+        text = Key(urlsafe=key).get()
         if not text:
             return HttpResponseNotFound()
 
