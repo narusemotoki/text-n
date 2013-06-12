@@ -17,11 +17,13 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #__COMMENT_OUT__
 if [ ! -e google_appengine ]; then
-  wget http://googleappengine.googlecode.com/files/google_appengine_1.8.0.zip
-  unzip -q google_appengine_1.8.0.zip
-  rm google_appengine_1.8.0.zip
+  ZIP_NAME='google_appengine_1.8.1.zip'
+  wget http://googleappengine.googlecode.com/files/$ZIP_NAME
+  unzip -q $ZIP_NAME
+  rm $ZIP_NAME
 fi
 
+npm install
 if [ ! `which grunt` ]; then
   sudo env PATH=$PATH npm install -g -q grunt-cli
 fi
@@ -34,5 +36,3 @@ fi
 if [ ! `which phantomjs` ]; then
   sudo env PATH=$PATH npm install -g -q phantomjs
 fi
-
-npm install
