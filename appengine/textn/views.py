@@ -184,7 +184,8 @@ class ImageTextView(BaseView):
     def _render_image(self, text):
         image = Image.new('RGB', (1024, 1024), 'black')
         draw = ImageDraw.Draw(image)
-        font = ImageFont.truetype('fonts/VL-Gothic-Regular.ttf', 15, encoding='utf-8')
+        font_path = 'fonts/VL-Gothic-Regular.ttf'
+        font = ImageFont.truetype(font_path, 15, encoding='utf-8')
 
         width = 0
         height = 0
@@ -207,4 +208,3 @@ class ImageTextView(BaseView):
         if not text.password and self._has_read_permission(text):
             return self._render_image(text)
         return HttpResponseForbidden()
-
