@@ -18,12 +18,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <div ng-include src="'static/partial/loading.html'"></div>
 <div ng-hide="isLoading || !text.text">
   <div>
-    <p>
-      Plain Text: <a ng-href="{{ plainTextUrl }}" target="_blank">{{ plainTextUrl }}</a>
-    </p>
-    <p>
-      HTML: <a ng-href="{{ htmlUrl }}" target="_blank">{{ htmlUrl }}</a>
-    </p>
+    <ul>
+      <li>Plain Text: <a ng-href="{{ plainTextUrl }}" target="_blank">{{ plainTextUrl }}</a></li>
+      <li>Thumbnail: <a ng-href="{{ imageTextUrl }}" target="_blank">{{ imageTextUrl }}</a></li>
+      <li>HTML: <a ng-href="{{ htmlUrl }}" target="_blank">{{ htmlUrl }}</a></li>
+    </ul>
   </div>
   <pre>{{ text.text }}</pre>
 </div>

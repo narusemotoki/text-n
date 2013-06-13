@@ -20,6 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   TEXT_PATH = 'api/text'
 
   $scope.plainTextUrl = $scope.baseUrl + '/plaintext/' + $routeParams.key
+  $scope.imageTextUrl = $scope.baseUrl + '/api/imagetext/' + $routeParams.key + '.png'
   $scope.htmlUrl = $scope.baseUrl + '/#/html/' + $routeParams.key
 
   $scope.isLoading = true
