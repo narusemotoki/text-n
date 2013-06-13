@@ -37,3 +37,5 @@ handlers:
 libraries:
 - name: django
   version: "1.4"
+- name: PIL
+  version: latest

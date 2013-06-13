@@ -31,6 +31,7 @@ import time
 from django.shortcuts import redirect
 import urllib
 from django.core.urlresolvers import reverse
+from PIL import Image, ImageDraw, ImageFont
 
 
 def login(request, redirect_to):
@@ -177,3 +178,33 @@ class PlaneTextView(BaseView):
         if not text.password and self._has_read_permission(text):
             return self._render_to_plane_text_response(text.text)
         return HttpResponseForbidden()
+
+
+class ImageTextView(BaseView):
+    def _render_image(self, text):
+        image = Image.new('RGB', (1024, 1024), 'black')
+        draw = ImageDraw.Draw(image)
+        font = ImageFont.truetype('fonts/VL-Gothic-Regular.ttf', 15, encoding='utf-8')
+
+        width = 0
+        height = 0
+        for line in text.text.splitlines():
+            textsize = draw.textsize(line, font)
+            draw.text((0, height), line, font=font, fill='white')
+            width = max(textsize[0], width)
+            height += textsize[1]
+
+        response = HttpResponse(mimetype='image/png')
+        image.crop((0, 0, width, height)).save(response, 'PNG')
+
+        return response
+
+    def get(self, request, key):
+        text = Key(urlsafe=key).get()
+        if not text:
+            return HttpResponseNotFound()
+
+        if not text.password and self._has_read_permission(text):
+            return self._render_image(text)
+        return HttpResponseForbidden()
+

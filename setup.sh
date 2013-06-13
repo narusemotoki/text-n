@@ -23,6 +23,13 @@ if [ ! -e google_appengine ]; then
   rm $ZIP_NAME
 fi
 
+if [ ! -e appengine/fonts ]; then
+  wget 'http://sourceforge.jp/frs/redir.php?m=jaist&f=%2Fvlgothic%2F58961%2FVLGothic-20130607.zip' -O font.zip
+  unzip -q font.zip
+  rm font.zip
+  mv -f VLGothic appengine/fonts
+fi
+
 npm install
 if [ ! `which grunt` ]; then
   sudo env PATH=$PATH npm install -g -q grunt-cli
