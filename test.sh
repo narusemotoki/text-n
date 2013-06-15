@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #__COMMENT_OUT__
-./setup.sh
 
 PEP8RESULT=`pep8 . --exclude=google_appengine,node_modules 2>&1`
 if [ -n "$PEP8RESULT" ]; then
