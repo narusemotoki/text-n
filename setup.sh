@@ -38,6 +38,13 @@ wget http://code.angularjs.org/1.1.5/angular-mocks.js
 mkdir -p test
 mv angular-mocks.js test/.
 
+# Download CSS libraries
+wget http://twitter.github.io/bootstrap/assets/bootstrap.zip
+unzip -q bootstrap.zip
+mkdir -p appengine/static/css
+mv bootstrap/css/bootstrap.min.css appengine/static/css/.
+rm -rf bootstrap bootstrap.zip
+
 npm install
 if [ ! `which grunt` ]; then
   sudo env PATH=$PATH npm install -g -q grunt-cli
