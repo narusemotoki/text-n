@@ -30,11 +30,16 @@ if [ ! -e appengine/fonts ]; then
   mv -f VLGothic appengine/fonts
 fi
 
+# Download JavaScript libraries
+wget http://code.angularjs.org/1.1.5/angular.min.js
+mv angular.min.js appengine/static/js/.
+wget http://code.angularjs.org/1.1.5/angular-mocks.js
+mv angular-mocks.js test/.
+
 npm install
 if [ ! `which grunt` ]; then
   sudo env PATH=$PATH npm install -g -q grunt-cli
 fi
-
 
 if [ ! `which karma` ]; then
   sudo env PATH=$PATH npm install -g -q karma
