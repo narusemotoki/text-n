@@ -3,10 +3,8 @@
 *.pyc
 local_settings.py
 
-textn.js
-test.js
+*.js
 test-results.xml
 node_modules
-
-google_appengine
 appengine/fonts
+google_appengine
