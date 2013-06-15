@@ -32,8 +32,10 @@ fi
 
 # Download JavaScript libraries
 wget http://code.angularjs.org/1.1.5/angular.min.js
+mkdir -p appengine/static/js
 mv angular.min.js appengine/static/js/.
 wget http://code.angularjs.org/1.1.5/angular-mocks.js
+mkdir -p test
 mv angular-mocks.js test/.
 
 npm install
