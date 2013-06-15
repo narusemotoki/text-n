@@ -4,6 +4,8 @@
 local_settings.py
 
 *.js
+bootstrap.min.css
+
 test-results.xml
 node_modules
 appengine/fonts
