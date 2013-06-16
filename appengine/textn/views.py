@@ -190,7 +190,9 @@ class ImageTextView(BaseView):
 
         width = 0
         height = 0
-        for line in text.text.splitlines():
+        for i, line in enumerate(text.text.splitlines()):
+            if i == 30:
+                break
             formatted = string.expandtabs(line, 8)
             textsize = draw.textsize(formatted, font)
             draw.text((0, height), formatted, font=font, fill='white')
