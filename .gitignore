@@ -5,6 +5,7 @@ local_settings.py
 
 *.js
 bootstrap.min.css
+prettify.css
 
 test-results.xml
 node_modules

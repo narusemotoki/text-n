@@ -24,7 +24,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       <li>HTML: <a ng-href="{{ htmlUrl }}" target="_blank">{{ htmlUrl }}</a></li>
     </ul>
   </div>
-  <pre>{{ text.text }}</pre>
+  <button class="btn" ng-class="{true: 'active'}[isEnabledSyntaxHighlighting]" ng-click="switchPrettyprint()">Syntax highlighting</button>
+  <pre ng-show="isEnabledSyntaxHighlighting" class="prettyprint">{{ text.text }}</pre>
+  <pre ng-hide="isEnabledSyntaxHighlighting">{{ text.text }}</pre>
 </div>
 <div ng-hide="isLoading || text.text">
   <div>

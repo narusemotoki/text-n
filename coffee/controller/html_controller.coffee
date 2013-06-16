@@ -29,3 +29,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     $scope.text = data
     $scope.isLoading = false
   .error (data, status) => $scope.commonErrorHandle data, status
+
+  $scope.switchPrettyprint = =>
+    $scope.isEnabledSyntaxHighlighting = !$scope.isEnabledSyntaxHighlighting
+    prettyPrint() if $scope.isEnabledSyntaxHighlighting
