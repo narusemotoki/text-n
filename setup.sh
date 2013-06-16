@@ -45,6 +45,13 @@ mkdir -p appengine/static/css
 mv bootstrap/css/bootstrap.min.css appengine/static/css/.
 rm -rf bootstrap bootstrap.zip
 
+# Download google-code-prettify
+wget http://google-code-prettify.googlecode.com/files/prettify-small-4-Mar-2013.tar.bz2
+tar -xf prettify-small-4-Mar-2013.tar.bz2
+mv google-code-prettify/prettify.js appengine/static/js/.
+mv google-code-prettify/prettify.css appengine/static/css/.
+rm -rf google-code-prettify prettify-small-4-Mar-2013.tar.bz2
+
 npm install
 if [ ! `which grunt` ]; then
   sudo env PATH=$PATH npm install -g -q grunt-cli
