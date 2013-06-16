@@ -32,6 +32,7 @@ from django.shortcuts import redirect
 import urllib
 from django.core.urlresolvers import reverse
 from PIL import Image, ImageDraw, ImageFont
+import string
 
 
 def login(request, redirect_to):
@@ -190,8 +191,9 @@ class ImageTextView(BaseView):
         width = 0
         height = 0
         for line in text.text.splitlines():
-            textsize = draw.textsize(line, font)
-            draw.text((0, height), line, font=font, fill='white')
+            formatted = string.expandtabs(line, 8)
+            textsize = draw.textsize(formatted, font)
+            draw.text((0, height), formatted, font=font, fill='white')
             width = max(textsize[0], width)
             height += textsize[1]
 
