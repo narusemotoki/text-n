@@ -25,7 +25,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   .success (data) =>
     $scope.texts = data
     $scope.isLoading = false
-    console.log url.createPlainText('a')
   .error (data, status) => $scope.commonErrorHandle data, status
 
   $scope.introduce = (text) => text.text.match(/(.*\n?){1,5}/)[0]
