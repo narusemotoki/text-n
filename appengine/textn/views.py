@@ -212,3 +212,11 @@ class ImageTextView(BaseView):
         if not text.password and self._has_read_permission(text):
             return self._render_image(text)
         return HttpResponseForbidden()
+
+
+class MineView(BaseView):
+    def get(self, request):
+        return self._render_to_json_response([
+            self._text2dict(text) for text in
+            Text.query(Text.user == users.get_current_user()).fetch()
+        ])

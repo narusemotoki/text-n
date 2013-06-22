@@ -20,7 +20,7 @@ from google.appengine.ext import ndb
 
 
 class Text(ndb.Model):
-    user = ndb.UserProperty(auto_current_user_add=True, indexed=False)
+    user = ndb.UserProperty(auto_current_user_add=True)
     approvals = ndb.TextProperty(repeated=True)
     text = ndb.TextProperty(required=True)
     password = ndb.TextProperty()

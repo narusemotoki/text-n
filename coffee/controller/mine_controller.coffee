@@ -15,21 +15,16 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###
+@MineCtrl = ($scope, $http, $location, url) =>
+  MINE_PATH = 'api/mine'
 
-@HtmlCtrl = ($scope, $routeParams, $http, url) =>
-  TEXT_PATH = 'api/text'
-
-  $scope.plainTextUrl = url.createPlainText $routeParams.key
-  $scope.imageTextUrl = url.createImageText $routeParams.key
-  $scope.htmlUrl = url.createHtml $routeParams.key
+  $scope.createUrl = (text) => url.createHtml text.key
 
   $scope.isLoading = true
-  $http.get(TEXT_PATH + '/' + $routeParams.key)
+  $http.get(MINE_PATH)
   .success (data) =>
-    $scope.text = data
+    $scope.texts = data
     $scope.isLoading = false
   .error (data, status) => $scope.commonErrorHandle data, status
 
-  $scope.switchPrettyprint = =>
-    $scope.isEnabledSyntaxHighlighting = !$scope.isEnabledSyntaxHighlighting
-    prettyPrint() if $scope.isEnabledSyntaxHighlighting
+  $scope.introduce = (text) => text.text.match(/(.*\n?){1,5}/)[0]

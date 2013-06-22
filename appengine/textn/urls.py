@@ -17,13 +17,14 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 from django.conf.urls.defaults import patterns
-from views import TextView, PlaneTextView, ImageTextView
+from views import TextView, PlaneTextView, ImageTextView, MineView
 
 
 urlpatterns = patterns(
     'textn.views',
     (r'^api/text/?(?P<key>.*)$', TextView.as_view()),
     (r'^api/imagetext/?(?P<key>.*)\.png$', ImageTextView.as_view()),
+    (r'^api/mine$', MineView.as_view()),
     (r'^plaintext/?(?P<key>.*)$', PlaneTextView.as_view()),
     (r'^auth/login/(?P<redirect_to>.*)$', 'login'),
     (r'^auth/logout$', 'logout'),
