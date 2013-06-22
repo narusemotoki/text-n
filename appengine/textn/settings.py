@@ -16,6 +16,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
+ALLOWED_HOSTS = ['localhost', 'text-n.appspot.com']
+
 MIDDLEWARE_CLASSES = ('django.middleware.common.CommonMiddleware',)
 
 INSTALLED_APPS = ('textn',)
@@ -27,3 +29,5 @@ ROOT_PATH = os.path.dirname(__file__)
 TEMPLATE_DIRS = (ROOT_PATH + '/templates',)
 
 CACHE_BACKEND = 'memcached:///'
+
+SECRET_KEY = 'textn'

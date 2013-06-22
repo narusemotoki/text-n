@@ -15,7 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###
-@MineCtrl = ($scope, $http, $location, url) =>
+@MineCtrl = ($scope, $http, url) =>
   MINE_PATH = 'api/mine'
 
   $scope.createUrl = (text) => url.createHtml text.key
