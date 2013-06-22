@@ -18,10 +18,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <div ng-include src="'static/partial/loading.html'"></div>
 
 <div ng-hide="isLoading">
-  <ul>
-    <li ng-repeat="text in texts">
-      <a ng-href="{{ createUrl(text) }}">{{ text.key }}</a>
-      <pre>{{ introduce(text) }}</pre>
-    </li>
-  </ul>
+  <div class="form-search">
+    <span class="input-append">
+      <input type="text" ng-model="filter" placeholder="Filter" class="input-large" autofocus />
+      <button class="btn btn-danger" ng-click="filter = ''">X</button>
+    </span>
+  </div>
+  <hr />
+  <div>
+    <ul class="unstyled">
+      <li ng-repeat="text in texts|filter: {text: filter}">
+        <a ng-href="{{ createUrl(text) }}">{{ text.key }}</a>
+        <pre>{{ introduce(text) }}</pre>
+      </li>
+    </ul>
+  </div>
 </div>
