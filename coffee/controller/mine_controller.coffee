@@ -29,12 +29,3 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   .error (data, status) => $scope.commonErrorHandle data, status
 
   $scope.introduce = (text) => text.text.match(/(.*\n?){1,5}/)[0]
-
-
-
-
-
-
-
-
-
