@@ -20,9 +20,18 @@ angular.module('textn', []).config ($routeProvider) =>
   $routeProvider.when '/html/:key',
     templateUrl: 'static/partial/html.html'
     controller: 'HtmlCtrl'
+  .when '/mine',
+    templateUrl: 'static/partial/mine.html'
+    controller: 'MineCtrl'
   .otherwise
     templateUrl: 'static/partial/edit.html'
     controller: 'EditCtrl'
+.service 'url', ($rootScope) =>
+  baseUrl = $rootScope.baseUrl
+
+  createPlainText: (key) => baseUrl + '/plaintext/' + key
+  createImageText: (key) => baseUrl + '/api/imagetext/' + key + '.png'
+  createHtml: (key) => baseUrl + '/#/html/' + key
 .run ($rootScope, $location, $window) =>
   $rootScope.appName = 'text-n'
   $rootScope.baseUrl = $location.protocol() + '://' +
