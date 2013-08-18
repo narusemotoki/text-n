@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #__COMMENT_OUT__
 if [ ! -e google_appengine ]; then
-  ZIP_NAME='google_appengine_1.8.1.zip'
+  ZIP_NAME='google_appengine_1.8.3.zip'
   wget http://googleappengine.googlecode.com/files/$ZIP_NAME
   unzip -q $ZIP_NAME
   rm $ZIP_NAME
