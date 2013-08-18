@@ -20,6 +20,7 @@ from appengine import GaeTestCase
 from textn.views import MineView
 from textn.models import Text
 import json
+import datetime
 
 
 class MineViewTest(GaeTestCase):
@@ -29,7 +30,9 @@ class MineViewTest(GaeTestCase):
         GaeTestCase.setUp(self)
         self.mine_view = MineView()
         self.login(MineViewTest.EMAIL)
-        Text(text='text1', approvals=[]).put()
+        text1 = Text(text='text1', approvals=[])
+        text1.updated_at = datetime.datetime(2013, 1, 1, 0, 0, 0, 0)
+        text1.put()
         Text(text='text2', approvals=[]).put()
 
         self.login('other' + MineViewTest.EMAIL)
@@ -42,8 +45,8 @@ class MineViewTest(GaeTestCase):
         self.assertEqual(result.status_code, 200)
         content = json.loads(result.content)
         self.assertEqual(len(content), 2)
-        self.assertEqual(content[0]['text'], 'text1')
-        self.assertEqual(content[1]['text'], 'text2')
+        self.assertEqual(content[0]['text'], 'text2')
+        self.assertEqual(content[1]['text'], 'text1')
 
         self.logout()
         result = self.mine_view.get(None)
