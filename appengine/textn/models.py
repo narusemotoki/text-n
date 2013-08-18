@@ -25,4 +25,4 @@ class Text(ndb.Model):
     text = ndb.TextProperty(required=True)
     password = ndb.TextProperty()
     created_at = ndb.DateTimeProperty(auto_now_add=True, indexed=False)
-    updated_at = ndb.DateTimeProperty(auto_now=True, indexed=False)
+    updated_at = ndb.DateTimeProperty(auto_now=True, indexed=True)

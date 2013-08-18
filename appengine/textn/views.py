@@ -218,5 +218,6 @@ class MineView(BaseView):
     def get(self, request):
         return self._render_to_json_response([
             self._text2dict(text) for text in
-            Text.query(Text.user == users.get_current_user()).fetch()
+            Text.query(Text.user == users.get_current_user())
+            .order(-Text.updated_at).fetch(100)
         ])
