@@ -44,5 +44,5 @@ angular.module('textn', []).config ($routeProvider) =>
     if status is 401
       escapedPath = $window.escape '#' + $location.path()
       $window.location.href = $rootScope.baseUrl + '/auth/login/' + escapedPath
-.filter 'nl2br', => (source) =>
-  String(source).replace /\r?\n/g, '<br />' if source
+    else
+      $window.location.href = $rootScope.baseUrl + '/auth/login/' + escapedPath
