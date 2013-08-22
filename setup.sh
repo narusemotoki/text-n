@@ -39,7 +39,7 @@ mkdir -p test
 mv angular-mocks.js test/.
 
 # Download CSS libraries
-wget http://twitter.github.io/bootstrap/assets/bootstrap.zip
+wget http://twbs.github.io/bootstrap/2.3.2/assets/bootstrap.zip
 unzip -q bootstrap.zip
 mkdir -p appengine/static/css
 mv bootstrap/css/bootstrap.min.css appengine/static/css/.
