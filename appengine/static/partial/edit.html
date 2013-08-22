@@ -19,27 +19,37 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 <div ng-hide="isLoading">
   <form name="form" ng-submit="submit()" novalidate>
-    <textarea class="span12" type="text" rows="5" name="text" ng-model="text" ng-trim="false" placeholder="Paste your text!" required></textarea>
+    <textarea class="form-control" type="text" rows="5" name="text" ng-model="text" ng-trim="false" placeholder="Paste your text!" required></textarea>
     <p ng-show="">
       <input type="password" name="password" ng-model="password" placeholder="Password" />
       Password is for viewing rather than editing.
     </p>
-    <ul class="unstyled">
+    <ul class="list-unstyled">
       <li ng-repeat="approval in approvals">
-        <span class="input-append">
-          <input type="text" ng-model="approval.approval" placeholder="Approval" autofocus />
-          <button class="btn btn-danger" ng-disabled="approval.approval == ''" ng-click="approval.approval = ''">X</button>
-          <button class="btn btn-danger" ng-click="delete($index)">-</button>
-        </span>
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="input-group">
+              <input type="text" class="form-control" ng-model="approval.approval" placeholder="Approval" autofocus />
+              <span class="input-group-btn">
+                <button class="btn btn-danger" ng-disabled="approval.approval == ''" ng-click="approval.approval = ''">X</button>
+                <button class="btn btn-danger" ng-click="delete($index)">-</button>
+              </span>
+            </div>
+          </div>
+        </div>
       </li>
       <li>
-        <input type="text" ng-model="approval" ng-change="add()" placeholder="Approval" />
-        Account of Gmail or GoogleApps: "example@gmail.com", GoogleApps domain: "example.com".
+        <div class="row">
+          <div class="col-lg-4">
+            <input type="text" class="form-control" ng-model="approval" ng-change="add()" placeholder="Approval" />
+          </div>
+          <h4><span class="label label-info">Account of Gmail or GoogleApps: "example@gmail.com", GoogleApps domain: "example.com".</span></h4>
+        </div>
       </li>
     </ul>
     <p>
       {{ user }}
-      <button class="btn" ng-disabled="form.text.$error.required" />Submit</button>
+      <button class="btn btn-default" ng-disabled="form.text.$error.required" />Submit</button>
     </p>
   </form>
 </div>

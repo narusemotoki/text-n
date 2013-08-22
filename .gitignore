@@ -5,6 +5,7 @@ local_settings.py
 
 *.js
 bootstrap.min.css
+bootstrap-theme.min.css
 prettify.css
 
 test-results.xml
