@@ -43,8 +43,6 @@ wget https://github.com/twbs/bootstrap/archive/v3.0.0.zip
 unzip -q v3.0.0.zip
 mkdir -p appengine/static/css
 mv bootstrap-3.0.0/dist/css/bootstrap.min.css appengine/static/css/.
-mv bootstrap-3.0.0/dist/css/bootstrap-theme.min.css appengine/static/css/.
-mv bootstrap/css/bootstrap.min.css appengine/static/css/.
 rm -rf bootstrap-3.0.0 v3.0.0.zip
 
 # Download google-code-prettify
